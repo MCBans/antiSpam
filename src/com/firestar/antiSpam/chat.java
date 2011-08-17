@@ -33,30 +33,32 @@ public class chat extends PlayerListener {
 	}
 	public void onPlayerChat(PlayerChatEvent event){
 		long timeInMillis = System.currentTimeMillis();
-		if(chatLastSent.containsKey(event.getPlayer().getName())){
-			ArrayList<Long> g = new ArrayList<Long>();
-			int tmpderp = 1;
-			for( Long tmp : chatLastSent.get(event.getPlayer().getName())){
-				if((maxTM+tmp)>timeInMillis){
-					tmpderp++;
-					g.add(tmp);
-				}else{
+		if(!plugin.hasPerm(event.getPlayer())){
+			if(chatLastSent.containsKey(event.getPlayer().getName())){
+				ArrayList<Long> g = new ArrayList<Long>();
+				int tmpderp = 1;
+				for( Long tmp : chatLastSent.get(event.getPlayer().getName())){
+					if((maxTM+tmp)>timeInMillis){
+						tmpderp++;
+						g.add(tmp);
+					}else{
+					}
 				}
-			}
-			if(tmpderp>=maxMSG){
-				if(mcb!=null){
-					mcb.mcb_handler.ban(event.getPlayer().getName(), "console", "spamBot", "g");
-				}else{
-					event.getPlayer().kickPlayer("Stop spamming!");
+				if(tmpderp>=maxMSG){
+					if(mcb!=null){
+						mcb.mcb_handler.ban(event.getPlayer().getName(), "console", "spamBot", "g");
+					}else{
+						event.getPlayer().kickPlayer("Stop spamming!");
+					}
+					event.setCancelled(true);
 				}
-				event.setCancelled(true);
+				g.add(timeInMillis);
+				chatLastSent.put(event.getPlayer().getName(), g);
+			}else{
+				ArrayList<Long> g = new ArrayList<Long>();
+				g.add(timeInMillis);
+				chatLastSent.put(event.getPlayer().getName(), g);
 			}
-			g.add(timeInMillis);
-			chatLastSent.put(event.getPlayer().getName(), g);
-		}else{
-			ArrayList<Long> g = new ArrayList<Long>();
-			g.add(timeInMillis);
-			chatLastSent.put(event.getPlayer().getName(), g);
 		}
 	}
 }
