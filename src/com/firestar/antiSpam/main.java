@@ -29,10 +29,10 @@ public class main extends JavaPlugin {
         	Message("Configuration File Found!");
         	main_config = new Configuration(fileSettings);
             main_config.load();
-            playerListener = new chat(Integer.valueOf(main_config.getString("maxMessage")),Integer.valueOf(main_config.getString("maxTime")));
+            playerListener = new chat(this,Integer.valueOf(main_config.getString("maxMessage")),Integer.valueOf(main_config.getString("maxTime")));
         }else{
         	Message("No Configuration Detected, Default Settings!");
-        	playerListener = new chat(4,2);
+        	playerListener = new chat(this,4,2);
         }
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvent(Event.Type.PLAYER_CHAT, playerListener, Priority.Highest, this);
