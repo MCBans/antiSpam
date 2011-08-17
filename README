@@ -1,0 +1,11 @@
+antiSpam
+
+Default: kick on 4 messages every 2 seconds
+
+Configuration File: plugins/antiSpam/settings.yml
+CONTENT<<<
+
+maxMessage: 4
+maxTime: 2
+
+>>>>>CONTENT

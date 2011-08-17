@@ -1,0 +1,5 @@
+name: antiSpam
+main: com.firestar.antiSpam.main
+version: 1
+author: Firestar
+commands:

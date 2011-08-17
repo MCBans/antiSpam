@@ -1,0 +1,69 @@
+package com.firestar.antiSpam;
+
+import java.io.File;
+import java.util.logging.Logger;
+
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.Event.Priority;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.config.Configuration;
+
+import com.nijiko.permissions.PermissionHandler;
+import com.nijikokun.bukkit.Permissions.Permissions;
+
+public class main extends JavaPlugin {
+	private PermissionHandler Permissions = null;
+	static private Logger log = Logger.getLogger("Minecraft");
+	private chat playerListener = null;
+	public void onDisable() {
+		Message("Disabled antiSpam");
+	}
+	public void onEnable() {
+		Message("Enabled antiSpam");
+        File fileSettings = new File("plugins/antiSpam/settings.yml");
+        Configuration main_config = null;
+        if(fileSettings.exists()){
+        	Message("Configuration File Found!");
+        	main_config = new Configuration(fileSettings);
+            main_config.load();
+            playerListener = new chat(Integer.valueOf(main_config.getString("maxMessage")),Integer.valueOf(main_config.getString("maxTime")));
+        }else{
+        	Message("No Configuration Detected, Default Settings!");
+        	playerListener = new chat(4,2);
+        }
+		PluginManager pm = getServer().getPluginManager();
+		pm.registerEvent(Event.Type.PLAYER_CHAT, playerListener, Priority.Highest, this);
+		setupPermissions();
+	}
+	public void setupPermissions() {
+		Plugin test = getServer().getPluginManager().getPlugin("Permissions");
+		if(Permissions == null) {
+		    if(test != null) {
+		    	Permissions = ((Permissions)test).getHandler();
+		    	Message("Found Permission Bridge!");
+		    } else {
+		    }
+		}
+	}
+	public boolean hasPerm(Player player){
+		if(Permissions==null){
+			if(player.hasPermission("antiSpam")){
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			if(Permissions.has(player, "antiSpam")){
+				return true;
+			}else{
+				return false;
+			}
+		}
+	}
+	public void Message(String msg){
+		log.info("antiSpam: "+msg);
+	}
+}
