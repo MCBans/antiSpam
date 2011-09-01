@@ -6,7 +6,8 @@ import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.plugin.Plugin;
 
-import com.firestar.mcbans.mcbans;
+import com.mcbans.firestar.mcbans.bukkitInterface;
+import com.mcbans.firestar.mcbans.pluginInterface.ban;
 
 
 public class chat extends PlayerListener {
@@ -14,7 +15,7 @@ public class chat extends PlayerListener {
 	private int maxMSG = 5;
 	private int maxTM = 4;
 	private main plugin = null;
-	private mcbans mcb = null;
+	private bukkitInterface mcb = null;
 	public chat( main d, int messageC, int maxTime ){
 		maxMSG = messageC;
 		maxTM = maxTime*1000;
@@ -25,7 +26,7 @@ public class chat extends PlayerListener {
 		Plugin test = plugin.getServer().getPluginManager().getPlugin("mcbans");
 		if(mcb == null) {
 		    if(test != null) {
-		    	mcb = ((mcbans)test);
+		    	mcb = ((bukkitInterface)test);
 		    	plugin.Message("Found mcbans, enabling global ban!");
 		    } else {
 		    }
@@ -46,7 +47,8 @@ public class chat extends PlayerListener {
 				}
 				if(tmpderp>=maxMSG){
 					if(mcb!=null){
-						mcb.mcb_handler.ban(event.getPlayer().getName(), "console", "spamBot", "g");
+						ban Ban = new ban(mcb, "globalBan", event.getPlayer().getName(), event.getPlayer().getAddress().getAddress().getHostAddress(), "[antiSpam]", "spamBot", "", "");
+						Ban.start();
 					}else{
 						event.getPlayer().kickPlayer("Stop spamming!");
 					}
