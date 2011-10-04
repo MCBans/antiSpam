@@ -1,6 +1,7 @@
 package com.firestar.antiSpam;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 import org.bukkit.entity.Player;
@@ -17,6 +18,7 @@ import com.nijikokun.bukkit.Permissions.Permissions;
 public class main extends JavaPlugin {
 	private PermissionHandler Permissions = null;
 	static private Logger log = Logger.getLogger("Minecraft");
+	private HashMap<String, Boolean> actionTaken = new HashMap<String, Boolean>();
 	private chat playerListener = null;
 	public void onDisable() {
 		Message("Disabled antiSpam");
@@ -47,6 +49,15 @@ public class main extends JavaPlugin {
 		    } else {
 		    }
 		}
+	}
+	public boolean actionGet(String player){
+		if(actionTaken.containsKey(player)){
+			return actionTaken.containsKey(player);
+		}
+		return false;
+	}
+	public void actionSet(String player, Boolean set){
+		actionTaken.put(player,set);
 	}
 	public boolean hasPerm(Player player){
 		if(Permissions==null){

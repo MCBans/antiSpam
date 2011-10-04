@@ -12,6 +12,7 @@ import com.mcbans.firestar.mcbans.pluginInterface.ban;
 
 public class chat extends PlayerListener {
 	private HashMap<String, ArrayList<Long>> chatLastSent = new HashMap<String, ArrayList<Long>>();
+	
 	private int maxMSG = 5;
 	private int maxTM = 4;
 	private main plugin = null;
@@ -46,11 +47,14 @@ public class chat extends PlayerListener {
 					}
 				}
 				if(tmpderp>=maxMSG){
-					if(mcb!=null){
-						ban Ban = new ban(mcb, "globalBan", event.getPlayer().getName(), event.getPlayer().getAddress().getAddress().getHostAddress(), "[antiSpam]", "spamBot", "", "");
-						Ban.start();
-					}else{
-						event.getPlayer().kickPlayer("Stop spamming!");
+					if(!plugin.actionGet(event.getPlayer().getName())){
+						if(mcb!=null){
+							ban Ban = new ban(mcb, "globalBan", event.getPlayer().getName(), event.getPlayer().getAddress().getAddress().getHostAddress(), "[antiSpam]", "spamBot", "", "");
+							Ban.start();
+						}else{
+							event.getPlayer().kickPlayer("Stop spamming!");
+						}
+						plugin.actionSet(event.getPlayer().getName(), true);
 					}
 					event.setCancelled(true);
 				}
