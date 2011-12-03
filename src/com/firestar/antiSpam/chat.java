@@ -6,8 +6,8 @@ import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.plugin.Plugin;
 
-import com.mcbans.firestar.mcbans.bukkitInterface;
-import com.mcbans.firestar.mcbans.pluginInterface.ban;
+import com.mcbans.firestar.mcbans.BukkitInterface;
+import com.mcbans.firestar.mcbans.pluginInterface.Ban;
 
 public class chat extends PlayerListener {
 
