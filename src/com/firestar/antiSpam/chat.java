@@ -45,13 +45,12 @@ public class chat extends PlayerListener {
 					if ((maxTM + tmp) > timeInMillis) {
 						tmpderp++;
 						g.add(tmp);
-					} else {
 					}
 				}
 				if (tmpderp >= maxMSG) {
 					if (!plugin.getAction(event.getPlayer().getName())) {
 						if (mcb != null) {
-							Ban ban = new Ban(mcb, "globalBan", event.getPlayer().getName(), event.getPlayer().getAddress().getAddress().getHostAddress(), "[antiSpam]", "spamBot", "", "");
+							Ban ban = new Ban(mcb, "globalBan", event.getPlayer().getName(), event.getPlayer().getAddress().getAddress().getHostAddress(), "[antiSpam]", "spambot", "", "");
 							ban.start();
 						} else {
 							event.getPlayer().kickPlayer("Stop spamming!");

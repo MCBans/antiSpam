@@ -37,7 +37,7 @@ public class main extends JavaPlugin {
 			playerListener = new chat(this, Integer.valueOf(main_config.getString("maxMessage")), Integer.valueOf(main_config.getString("maxTime")));
 		} else {
 			message("No Configuration Detected, Default Settings!");
-			playerListener = new chat(this, 4, 2);
+			playerListener = new chat(this, 5, 2);
 		}
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvent(Event.Type.PLAYER_CHAT, playerListener, Priority.Highest, this);
