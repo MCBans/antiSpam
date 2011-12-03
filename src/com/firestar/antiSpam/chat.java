@@ -15,7 +15,7 @@ public class chat extends PlayerListener {
 	private int maxMSG = 5;
 	private int maxTM = 4;
 	private main plugin = null;
-	private bukkitInterface mcb = null;
+	private BukkitInterface mcb = null;
 
 	public chat(main d, int messageC, int maxTime) {
 		maxMSG = messageC;
@@ -28,7 +28,7 @@ public class chat extends PlayerListener {
 		Plugin test = plugin.getServer().getPluginManager().getPlugin("mcbans");
 		if (mcb == null) {
 			if (test != null) {
-				mcb = ((bukkitInterface) test);
+				mcb = ((BukkitInterface) test);
 				plugin.message("Found mcbans, enabling global ban!");
 			}
 		}
@@ -51,8 +51,8 @@ public class chat extends PlayerListener {
 				if (tmpderp >= maxMSG) {
 					if (!plugin.getAction(event.getPlayer().getName())) {
 						if (mcb != null) {
-							ban Ban = new ban(mcb, "globalBan", event.getPlayer().getName(), event.getPlayer().getAddress().getAddress().getHostAddress(), "[antiSpam]", "spamBot", "", "");
-							Ban.start();
+							Ban ban = new Ban(mcb, "globalBan", event.getPlayer().getName(), event.getPlayer().getAddress().getAddress().getHostAddress(), "[antiSpam]", "spamBot", "", "");
+							ban.start();
 						} else {
 							event.getPlayer().kickPlayer("Stop spamming!");
 						}
