@@ -1,6 +1,7 @@
 name: antiSpam
 main: com.firestar.antiSpam.main
-version: 1.2
+version: 1.4
+description: Stops spam in chat and command spam.
 author: Firestar
 commands:
 permissions:

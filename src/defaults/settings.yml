@@ -1,0 +1,47 @@
+## ANTISPAM 1.4 (Firestar)
+# Main Configuration Settings
+##
+
+## maxChatMessages:
+#     This is how many times a player can send messages to chat
+##  Default: 5
+maxChatMessages: 5
+
+## maxMessageTime:
+#     This is the amount of time they can send maxChatMessages to trigger the action
+##  Default: 3
+maxMessageTime: 3
+
+## maxCommands:
+#     This is the number of commands can be sent
+##  Default: 5
+maxCommands: 5
+
+## maxCommandTime:
+#     This is the amount of time they can send maxCommands to trigger the action
+##  Default: 3
+maxCommandTime: 3
+
+## tempBanDuration:
+#        Only enabled when "actionTake: 5"
+#     This is the time they are banned by the Measure (measure is the measurement of time)
+##  Default: "5"
+tempBanDuration: "5"
+
+## tempBanDuration:
+#        Only enabled when "actionTake: 5"
+#     Measure is the measurement of time (m = minutes,h = hours,d = days)
+##  Default: "m"
+tempBanMeasure: "m"
+
+## actionTake:
+#     Actions you can make (1 = kick, 2 = bukkit ban, 3 = local ban, 4 = global ban, 5 = temporary ban)
+##  Default: 1
+actionTake: 1 
+
+#
+## Customization Of Messages (Language)
+#
+tempBanMessage: "You have been temp banned"
+localBanMessage: "Spamming Bad :("
+kickMessage: "Spamming Bad :("

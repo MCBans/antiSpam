@@ -1,42 +1,39 @@
 package com.firestar.antiSpam;
 
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.bukkit.Permissions.Permissions;
 import java.util.HashMap;
 import java.util.logging.Logger;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import com.mcbans.firestar.mcbans.Settings;
+
 
 public class main extends JavaPlugin {
 
-    private PermissionHandler Permissions = null;
     private static final Logger log = Logger.getLogger("Minecraft");
-    private HashMap<String, Boolean> actionTaken = new HashMap();
+    
+	private HashMap<String, Boolean> actionTaken = new HashMap<String, Boolean>();
     private chat playerListener = null;
-
+    public Settings settings = null;
     @Override
     public void onDisable() {
     }
 
     @Override
     public void onEnable() {
-        getConfig().options().copyDefaults(true);
-        this.playerListener = new chat(this, Integer.valueOf(getConfig().getString("maxMessage")).intValue(), Integer.valueOf(getConfig().getString("maxTime")).intValue());
-        this.playerListener = new chat(this, 5, 2);
-        PluginManager pm = getServer().getPluginManager();
+    	settings = new Settings();
+        this.playerListener = new chat(
+    		this, 
+    		settings.getInteger("maxChatMessages"),
+    		settings.getInteger("maxMessageTime"),
+    		settings.getInteger("maxCommands"),
+    		settings.getInteger("maxCommandTime"),
+    		settings.getString("tempBanDuration"),
+    		settings.getString("tempBanMeasure"),
+    		settings.getInteger("actionTake")
+        );
         getServer().getPluginManager().registerEvents(this.playerListener, this);
         saveConfig();
-    }
-
-    public void setupPermissions() {
-        Plugin test = getServer().getPluginManager().getPlugin("Permissions");
-        if ((this.Permissions == null)
-                && (test != null)) {
-            this.Permissions = ((Permissions) test).getHandler();
-            message("Found Permission Bridge!");
-        }
     }
 
     public boolean getAction(String player) {
@@ -51,11 +48,7 @@ public class main extends JavaPlugin {
     }
 
     public boolean hasPerm(Player player) {
-        if (this.Permissions == null) {
-            return player.hasPermission("antiSpam");
-        }
-
-        return this.Permissions.has(player, "antiSpam");
+        return player.hasPermission("antiSpam");
     }
 
     public void message(String msg) {
