@@ -1,10 +1,9 @@
-name: antiSpam
+name: antispam
 main: com.firestar.antiSpam.main
 version: 1.4
 description: Stops spam in chat and command spam.
 author: Firestar
-commands:
 permissions:
-  antiSpam:
+  antispam.ignore:
     description: Ignore chat from this player
     default: op

@@ -15,7 +15,7 @@ public class Settings{
 	public Settings(){
 		File plugin_settings = new File("plugins/antispam/settings.yml");
 		if (!plugin_settings.exists()) {
-			System.out.print("AntiSpam: settings.yml not found, generating default..");
+			System.out.print("[antispam] settings.yml not found, generating default..");
 			this.generate();
 			plugin_settings = new File("plugins/antispam/settings.yml");
 			config = YamlConfiguration.loadConfiguration(plugin_settings);
@@ -31,7 +31,7 @@ public class Settings{
 			if(!file.exists()){
 				file.mkdir();
 			}
-			file = new File("plugins/antispam/settings.yml");
+			file = new File("plugins/antispam/settings.yml"); 
 			OutputStream out = new FileOutputStream(file);
 			int read = 0;
 			byte[] bytes = new byte[1024];
@@ -44,7 +44,7 @@ public class Settings{
 			out.close();
 		}
 		catch(IOException e) {
-			System.err.println("AntiSpam: Error writing settings file.");
+			System.err.println("[antispam] Error writing settings file.");
 		}
 	}
 	public void reload() {

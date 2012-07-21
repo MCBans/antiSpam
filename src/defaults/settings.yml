@@ -42,6 +42,6 @@ actionTake: 1
 #
 ## Customization Of Messages (Language)
 #
-tempBanMessage: "You have been temp banned"
-localBanMessage: "Spamming Bad :("
-kickMessage: "Spamming Bad :("
+tempBanMessage: "Spamming Bad :(, Temp Banned!"
+localBanMessage: "Spamming Bad :(, Banned!"
+kickMessage: "Spamming Bad :(, Kicked!"

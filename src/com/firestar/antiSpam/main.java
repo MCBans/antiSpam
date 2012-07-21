@@ -5,8 +5,6 @@ import java.util.logging.Logger;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.mcbans.firestar.mcbans.Settings;
-
 
 public class main extends JavaPlugin {
 
@@ -33,12 +31,11 @@ public class main extends JavaPlugin {
     		settings.getInteger("actionTake")
         );
         getServer().getPluginManager().registerEvents(this.playerListener, this);
-        saveConfig();
     }
 
     public boolean getAction(String player) {
         if (this.actionTaken.containsKey(player)) {
-            return this.actionTaken.containsKey(player);
+            return this.actionTaken.get(player);
         }
         return false;
     }
@@ -48,10 +45,10 @@ public class main extends JavaPlugin {
     }
 
     public boolean hasPerm(Player player) {
-        return player.hasPermission("antiSpam");
+        return player.hasPermission("antispam.ignore");
     }
 
     public void message(String msg) {
-        log.info("antiSpam: " + msg);
+        log.info("[antispam] " + msg);
     }
 }
