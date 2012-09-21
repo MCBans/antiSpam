@@ -6,6 +6,7 @@ import com.mcbans.firestar.mcbans.org.json.JSONObject;
 import com.mcbans.firestar.mcbans.pluginInterface.Ban;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,6 +25,7 @@ public class chat
     private int maxTM = 4;
     private int maxCom = 5;
     private int maxCTM = 3;
+    private List<String> ignoreCom;
     private main pluginMain = null;
     private String Duration = null;
     private String Measure = null;
@@ -36,6 +38,7 @@ public class chat
     		int maxTime,
     		int commandC,
     		int maxCTime,
+    		List<String> ignoreC,
     		String duration,
     		String measure,
     		int action
@@ -45,6 +48,7 @@ public class chat
         this.maxTM = (maxTime * 1000);
         this.maxCom = commandC;
         this.maxCTM = (maxCTime * 1000);
+        this.ignoreCom = ignoreC;
         this.act = action;
         this.Duration = duration;
         this.Measure = measure;
@@ -69,8 +73,13 @@ public class chat
     }
     @EventHandler
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event){
-    	long timeInMillis = System.currentTimeMillis();
+        long timeInMillis = System.currentTimeMillis();
         if (!plugin.hasPerm(event.getPlayer())) {
+            for (String ic : ignoreCom){
+                if(event.getMessage().startsWith(ic)){ // check ignore
+                    return;
+                }
+            }
             if (commandLastSent.containsKey(event.getPlayer().getName())) {
                 ArrayList<Long> g = new ArrayList<Long>();
                 int tmpderp = 1;

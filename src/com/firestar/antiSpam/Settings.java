@@ -7,11 +7,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Settings{
 	private YamlConfiguration config;
 	public boolean exists = false;
-	
+
 	public Settings(){
 		File plugin_settings = new File("plugins/antispam/settings.yml");
 		if (!plugin_settings.exists()) {
@@ -31,11 +33,11 @@ public class Settings{
 			if(!file.exists()){
 				file.mkdir();
 			}
-			file = new File("plugins/antispam/settings.yml"); 
+			file = new File("plugins/antispam/settings.yml");
 			OutputStream out = new FileOutputStream(file);
 			int read = 0;
 			byte[] bytes = new byte[1024];
-		 
+
 			while ((read = in.read(bytes)) != -1) {
 				out.write(bytes, 0, read);
 			}
@@ -56,6 +58,13 @@ public class Settings{
 	}
 	public String getString( String variable ){
 		return config.getString( variable, "" );
+	}
+	public List<String> getStringList( String variable ){
+		if(config.get(variable) != null){
+			return config.getStringList(variable);
+		}else{
+			return new ArrayList<String>(0);
+		}
 	}
 	public String getPrefix ( ) {
 		return config.get("prefix", "").toString();
