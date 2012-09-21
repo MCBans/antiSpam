@@ -10,7 +10,7 @@ import java.util.HashMap;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
@@ -31,13 +31,13 @@ public class chat
     private main plugin = null;
     private BukkitInterface mcb = null;
     public chat(
-    		main d, 
-    		int messageC, 
-    		int maxTime, 
-    		int commandC, 
-    		int maxCTime, 
-    		String duration, 
-    		String measure, 
+    		main d,
+    		int messageC,
+    		int maxTime,
+    		int commandC,
+    		int maxCTime,
+    		String duration,
+    		String measure,
     		int action
     	){
     	pluginMain = d;
@@ -97,7 +97,7 @@ public class chat
         }
     }
     @EventHandler
-    public void onPlayerChat(PlayerChatEvent event) {
+    public void onPlayerChat(AsyncPlayerChatEvent event) {
         long timeInMillis = System.currentTimeMillis();
         if (!plugin.hasPerm(event.getPlayer())) {
             if (chatLastSent.containsKey(event.getPlayer().getName())) {
