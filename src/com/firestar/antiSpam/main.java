@@ -9,7 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class main extends JavaPlugin {
 
     private static final Logger log = Logger.getLogger("Minecraft");
-    
+
 	private HashMap<String, Boolean> actionTaken = new HashMap<String, Boolean>();
     private chat playerListener = null;
     public Settings settings = null;
@@ -21,11 +21,12 @@ public class main extends JavaPlugin {
     public void onEnable() {
     	settings = new Settings();
         this.playerListener = new chat(
-    		this, 
+    		this,
     		settings.getInteger("maxChatMessages"),
     		settings.getInteger("maxMessageTime"),
     		settings.getInteger("maxCommands"),
     		settings.getInteger("maxCommandTime"),
+    		settings.getStringList("ignoreCommands"),
     		settings.getString("tempBanDuration"),
     		settings.getString("tempBanMeasure"),
     		settings.getInteger("actionTake")
