@@ -76,7 +76,7 @@ public class chat
         long timeInMillis = System.currentTimeMillis();
         if (!plugin.hasPerm(event.getPlayer())) {
             for (String ic : ignoreCom){
-                if(event.getMessage().startsWith(ic)){ // check ignore
+                if(event.getMessage().toLowerCase().startsWith(ic.toLowerCase())){ // check ignore
                     return;
                 }
             }
