@@ -7,7 +7,9 @@ import com.mcbans.firestar.mcbans.pluginInterface.Ban;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,7 +21,7 @@ import org.bukkit.plugin.Plugin;
 public class chat
         implements Listener {
 
-    private HashMap<String, ArrayList<Long>> chatLastSent = new HashMap<String, ArrayList<Long>>();
+    private ConcurrentHashMap<String, ArrayList<Long>> chatLastSent = new ConcurrentHashMap<String, ArrayList<Long>>();
     private HashMap<String, ArrayList<Long>> commandLastSent = new HashMap<String, ArrayList<Long>>();
     private int maxMSG = 5;
     private int maxTM = 4;
@@ -72,7 +74,7 @@ public class chat
     	commandLastSent.remove(event.getPlayer().getName());
     }
     @EventHandler
-    public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event){
+    public void onPlayerCommandPreprocess(final PlayerCommandPreprocessEvent event){
         long timeInMillis = System.currentTimeMillis();
         if (!plugin.hasPermIgnoreCmd(event.getPlayer())) {
             for (String ic : ignoreCom){
@@ -106,7 +108,7 @@ public class chat
         }
     }
     @EventHandler
-    public void onPlayerChat(AsyncPlayerChatEvent event) {
+    public void onPlayerChat(final AsyncPlayerChatEvent event) {
         long timeInMillis = System.currentTimeMillis();
         if (!plugin.hasPermIgnoreChat(event.getPlayer())) {
             if (chatLastSent.containsKey(event.getPlayer().getName())) {
@@ -120,7 +122,16 @@ public class chat
                 }
                 if (tmpderp >= maxMSG) {
                     if (!plugin.getAction(event.getPlayer().getName())) {
-                        this.takeAction(event.getPlayer(),2);
+                        if (!event.isAsynchronous()){
+                            this.takeAction(event.getPlayer(),2);
+                        }else{
+                            Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                                @Override
+                                public void run(){
+                                    takeAction(event.getPlayer(),2);
+                                }
+                            });
+                        }
                         plugin.setAction(event.getPlayer().getName(), true);
                     }
                     event.setCancelled(true);
