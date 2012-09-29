@@ -45,8 +45,12 @@ public class main extends JavaPlugin {
         this.actionTaken.put(player, set);
     }
 
-    public boolean hasPerm(Player player) {
-        return player.hasPermission("antispam.ignore");
+    public boolean hasPermIgnoreChat(Player player) {
+        return (player.hasPermission("antispam.ignore") || player.hasPermission("antispam.ignore.chat"));
+    }
+
+    public boolean hasPermIgnoreCmd(Player player) {
+        return (player.hasPermission("antispam.ignore") || player.hasPermission("antispam.ignore.command"));
     }
 
     public void message(String msg) {

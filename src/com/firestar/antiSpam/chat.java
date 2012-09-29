@@ -74,7 +74,7 @@ public class chat
     @EventHandler
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event){
         long timeInMillis = System.currentTimeMillis();
-        if (!plugin.hasPerm(event.getPlayer())) {
+        if (!plugin.hasPermIgnoreCmd(event.getPlayer())) {
             for (String ic : ignoreCom){
                 if(event.getMessage().toLowerCase().startsWith(ic.toLowerCase())){ // check ignore
                     return;
@@ -108,7 +108,7 @@ public class chat
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         long timeInMillis = System.currentTimeMillis();
-        if (!plugin.hasPerm(event.getPlayer())) {
+        if (!plugin.hasPermIgnoreChat(event.getPlayer())) {
             if (chatLastSent.containsKey(event.getPlayer().getName())) {
                 ArrayList<Long> g = new ArrayList<Long>();
                 int tmpderp = 1;
