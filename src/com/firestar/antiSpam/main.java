@@ -1,6 +1,6 @@
 package com.firestar.antiSpam;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -10,7 +10,7 @@ public class main extends JavaPlugin {
 
     private static final Logger log = Logger.getLogger("Minecraft");
 
-	private HashMap<String, Boolean> actionTaken = new HashMap<String, Boolean>();
+	private ConcurrentHashMap<String, Boolean> actionTaken = new ConcurrentHashMap<String, Boolean>();
     private chat playerListener = null;
     public Settings settings = null;
     @Override
@@ -45,8 +45,12 @@ public class main extends JavaPlugin {
         this.actionTaken.put(player, set);
     }
 
-    public boolean hasPerm(Player player) {
-        return player.hasPermission("antispam.ignore");
+    public boolean hasPermIgnoreChat(Player player) {
+        return (player.hasPermission("antispam.ignore") || player.hasPermission("antispam.ignore.chat"));
+    }
+
+    public boolean hasPermIgnoreCmd(Player player) {
+        return (player.hasPermission("antispam.ignore") || player.hasPermission("antispam.ignore.command"));
     }
 
     public void message(String msg) {
