@@ -10,7 +10,7 @@ public class main extends JavaPlugin {
 
     private static final Logger log = Logger.getLogger("Minecraft");
 
-	private ConcurrentHashMap<String, Boolean> actionTaken = new ConcurrentHashMap<String, Boolean>();
+    private ConcurrentHashMap<String, Boolean> actionTaken = new ConcurrentHashMap<String, Boolean>();
     private chat playerListener = null;
     public Settings settings = null;
     @Override
@@ -19,18 +19,18 @@ public class main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-    	settings = new Settings();
+        settings = new Settings();
         this.playerListener = new chat(
-    		this,
-    		settings.getInteger("maxChatMessages"),
-    		settings.getInteger("maxMessageTime"),
-    		settings.getInteger("maxCommands"),
-    		settings.getInteger("maxCommandTime"),
-    		settings.getStringList("ignoreCommands"),
-    		settings.getString("tempBanDuration"),
-    		settings.getString("tempBanMeasure"),
-    		settings.getInteger("actionTake")
-        );
+                this,
+                settings.getInteger("maxChatMessages"),
+                settings.getInteger("maxMessageTime"),
+                settings.getInteger("maxCommands"),
+                settings.getInteger("maxCommandTime"),
+                settings.getStringList("ignoreCommands"),
+                settings.getString("tempBanDuration"),
+                settings.getString("tempBanMeasure"),
+                settings.getInteger("actionTake")
+                );
         getServer().getPluginManager().registerEvents(this.playerListener, this);
     }
 

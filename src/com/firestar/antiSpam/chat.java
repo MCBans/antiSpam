@@ -19,7 +19,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 
 public class chat
-        implements Listener {
+implements Listener {
 
     private ConcurrentHashMap<String, ArrayList<Long>> chatLastSent = new ConcurrentHashMap<String, ArrayList<Long>>();
     private HashMap<String, ArrayList<Long>> commandLastSent = new HashMap<String, ArrayList<Long>>();
@@ -35,17 +35,17 @@ public class chat
     private main plugin = null;
     private BukkitInterface mcb = null;
     public chat(
-    		main d,
-    		int messageC,
-    		int maxTime,
-    		int commandC,
-    		int maxCTime,
-    		List<String> ignoreC,
-    		String duration,
-    		String measure,
-    		int action
-    	){
-    	pluginMain = d;
+            main d,
+            int messageC,
+            int maxTime,
+            int commandC,
+            int maxCTime,
+            List<String> ignoreC,
+            String duration,
+            String measure,
+            int action
+            ){
+        pluginMain = d;
         this.maxMSG = messageC;
         this.maxTM = (maxTime * 1000);
         this.maxCom = commandC;
@@ -61,17 +61,17 @@ public class chat
     public void setupMCBans() {
         Plugin test = this.plugin.getServer().getPluginManager().getPlugin("mcbans");
         if ((this.mcb == null) && (test != null)) {
-        	if(test.isEnabled()){
-        		this.mcb = ((BukkitInterface) test);
-        		this.plugin.message("Found mcbans, enabling mcbans!");
-        	}
+            if(test.isEnabled()){
+                this.mcb = ((BukkitInterface) test);
+                this.plugin.message("Found mcbans, enabling mcbans!");
+            }
         }
     }
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-    	plugin.setAction(event.getPlayer().getName(), false);
-    	chatLastSent.remove(event.getPlayer().getName());
-    	commandLastSent.remove(event.getPlayer().getName());
+        plugin.setAction(event.getPlayer().getName(), false);
+        chatLastSent.remove(event.getPlayer().getName());
+        commandLastSent.remove(event.getPlayer().getName());
     }
     @EventHandler
     public void onPlayerCommandPreprocess(final PlayerCommandPreprocessEvent event){
@@ -93,7 +93,7 @@ public class chat
                 }
                 if (tmpderp >= maxCom) {
                     if (!plugin.getAction(event.getPlayer().getName())) {
-                    	this.takeAction(event.getPlayer(),1);
+                        this.takeAction(event.getPlayer(),1);
                         plugin.setAction(event.getPlayer().getName(), true);
                     }
                     event.setCancelled(true);
@@ -146,72 +146,72 @@ public class chat
         }
     }
     public void takeAction(Player player, int actT){
-    	switch(act){
-    		case 1:
-    			player.kickPlayer(pluginMain.settings.getString("kickMessage"));
-    		break;
-    		case 2: // Use bukkit banning
-    			player.setBanned(true);
-				player.kickPlayer(pluginMain.settings.getString("localBanMessage"));
-    		break;
-    		case 3:
-    			if(mcb!=null){
-    				Ban ban = new Ban(mcb, "localBan", player.getName(), player.getAddress().getAddress().getHostAddress(), "[antiSpam]", pluginMain.settings.getString("localBanMessage"), "", "");
-    				(new Thread(ban)).start();
-    			}else{
-    				System.out.println("[AntiSpam] Error, MCbans not found. Option 3 cannot be used, defaulting to Bukkit bans");
-    				player.setBanned(true);
-    				player.kickPlayer(pluginMain.settings.getString("localBanMessage"));
-    			}
-    		break;
-    		case 4:
-    			if(mcb!=null){
-    				JSONObject actionCause = new JSONObject();
-    		    	switch(actT){
-    		    		case 1:
-    		    			int offx = 0;
-    		    			for(long h : commandLastSent.get(player.getName())){
-    		    				try {
-									actionCause.put(String.valueOf(offx), h);
-								} catch (JSONException e) {
-									e.printStackTrace();
-								}
-    		    				offx++;
-    		    			}
-    		    		break;
-    		    		case 2:
-    		    			int offxI = 0;
-    		    			for(long h : chatLastSent.get(player.getName())){
-    		    				try {
-									actionCause.put(String.valueOf(offxI), h);
-								} catch (JSONException e) {
-									e.printStackTrace();
-								}
-    		    				offxI++;
-    		    			}
-    		    		break;
-    		    	}
-	    			Ban ban = new Ban(mcb, "globalBan", player.getName(), player.getAddress().getAddress().getHostAddress(), "[antiSpam]", "spambot", "", "", actionCause, false);
-	    			(new Thread(ban)).start();
-		    	}else{
-					System.out.println("[AntiSpam] Error, MCbans not found. Option 4 cannot be used, defaulting to Bukkit bans");
-					player.setBanned(true);
-					player.kickPlayer(pluginMain.settings.getString("localBanMessage"));
-				}
-    		break;
-    		case 5:
-    			if(mcb!=null){
-	    			Ban ban = new Ban(mcb, "tempBan", player.getName(), player.getAddress().getAddress().getHostAddress(), "[antiSpam]", pluginMain.settings.getString("tempBanMessage"), Duration, Measure);
-	    			(new Thread(ban)).start();
-	    		}else{
-    				System.out.println("[AntiSpam] Error, MCbans not found. Option 5 cannot be used, defaulting to Bukkit bans");
-    				player.setBanned(true);
-    				player.kickPlayer(pluginMain.settings.getString("localBanMessage"));
-    			}
-    		break;
-    		default:
-    			System.out.println("[AntiSpam] Error, "+act+" is not an option.");
-    		break;
-    	}
+        switch(act){
+        case 1:
+            player.kickPlayer(pluginMain.settings.getString("kickMessage"));
+            break;
+        case 2: // Use bukkit banning
+            player.setBanned(true);
+            player.kickPlayer(pluginMain.settings.getString("localBanMessage"));
+            break;
+        case 3:
+            if(mcb!=null){
+                Ban ban = new Ban(mcb, "localBan", player.getName(), player.getAddress().getAddress().getHostAddress(), "[antiSpam]", pluginMain.settings.getString("localBanMessage"), "", "");
+                (new Thread(ban)).start();
+            }else{
+                System.out.println("[AntiSpam] Error, MCbans not found. Option 3 cannot be used, defaulting to Bukkit bans");
+                player.setBanned(true);
+                player.kickPlayer(pluginMain.settings.getString("localBanMessage"));
+            }
+            break;
+        case 4:
+            if(mcb!=null){
+                JSONObject actionCause = new JSONObject();
+                switch(actT){
+                case 1:
+                    int offx = 0;
+                    for(long h : commandLastSent.get(player.getName())){
+                        try {
+                            actionCause.put(String.valueOf(offx), h);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        offx++;
+                    }
+                    break;
+                case 2:
+                    int offxI = 0;
+                    for(long h : chatLastSent.get(player.getName())){
+                        try {
+                            actionCause.put(String.valueOf(offxI), h);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        offxI++;
+                    }
+                    break;
+                }
+                Ban ban = new Ban(mcb, "globalBan", player.getName(), player.getAddress().getAddress().getHostAddress(), "[antiSpam]", "spambot", "", "", actionCause, false);
+                (new Thread(ban)).start();
+            }else{
+                System.out.println("[AntiSpam] Error, MCbans not found. Option 4 cannot be used, defaulting to Bukkit bans");
+                player.setBanned(true);
+                player.kickPlayer(pluginMain.settings.getString("localBanMessage"));
+            }
+            break;
+        case 5:
+            if(mcb!=null){
+                Ban ban = new Ban(mcb, "tempBan", player.getName(), player.getAddress().getAddress().getHostAddress(), "[antiSpam]", pluginMain.settings.getString("tempBanMessage"), Duration, Measure);
+                (new Thread(ban)).start();
+            }else{
+                System.out.println("[AntiSpam] Error, MCbans not found. Option 5 cannot be used, defaulting to Bukkit bans");
+                player.setBanned(true);
+                player.kickPlayer(pluginMain.settings.getString("localBanMessage"));
+            }
+            break;
+        default:
+            System.out.println("[AntiSpam] Error, "+act+" is not an option.");
+            break;
+        }
     }
 }
