@@ -1,9 +1,9 @@
 package com.firestar.antiSpam;
 
-import com.mcbans.firestar.mcbans.BukkitInterface;
+import com.mcbans.firestar.mcbans.MCBans;
+import com.mcbans.firestar.mcbans.api.MCBansAPI;
 import com.mcbans.firestar.mcbans.org.json.JSONException;
 import com.mcbans.firestar.mcbans.org.json.JSONObject;
-import com.mcbans.firestar.mcbans.pluginInterface.Ban;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +33,8 @@ implements Listener {
     private String Measure = null;
     private int act = 1; // DEFAULT KICK
     private main plugin = null;
-    private BukkitInterface mcb = null;
+    private MCBansAPI mcbApi = null;
+
     public chat(
             main d,
             int messageC,
@@ -59,11 +60,11 @@ implements Listener {
     }
 
     public void setupMCBans() {
-        Plugin test = this.plugin.getServer().getPluginManager().getPlugin("mcbans");
-        if ((this.mcb == null) && (test != null)) {
+        Plugin test = this.plugin.getServer().getPluginManager().getPlugin("MCBans");
+        if ((this.mcbApi == null) && (test != null)) {
             if(test.isEnabled()){
-                this.mcb = ((BukkitInterface) test);
-                this.plugin.message("Found mcbans, enabling mcbans!");
+                this.mcbApi = ((MCBans) test).getAPI(plugin);;
+                this.plugin.message("Found MCBans 4.0+, enabling this!");
             }
         }
     }
@@ -155,9 +156,8 @@ implements Listener {
             player.kickPlayer(pluginMain.settings.getString("localBanMessage"));
             break;
         case 3:
-            if(mcb!=null){
-                Ban ban = new Ban(mcb, "localBan", player.getName(), player.getAddress().getAddress().getHostAddress(), "[antiSpam]", pluginMain.settings.getString("localBanMessage"), "", "");
-                (new Thread(ban)).start();
+            if(mcbApi!=null){
+                mcbApi.localBan(player.getName(), "[antiSpam]", pluginMain.settings.getString("localBanMessage"));
             }else{
                 System.out.println("[AntiSpam] Error, MCbans not found. Option 3 cannot be used, defaulting to Bukkit bans");
                 player.setBanned(true);
@@ -165,7 +165,7 @@ implements Listener {
             }
             break;
         case 4:
-            if(mcb!=null){
+            if(mcbApi!=null){
                 JSONObject actionCause = new JSONObject();
                 switch(actT){
                 case 1:
@@ -191,8 +191,7 @@ implements Listener {
                     }
                     break;
                 }
-                Ban ban = new Ban(mcb, "globalBan", player.getName(), player.getAddress().getAddress().getHostAddress(), "[antiSpam]", "spambot", "", "", actionCause, false);
-                (new Thread(ban)).start();
+                mcbApi.globalBan(player.getName(), "[antiSpam]", "spambot");
             }else{
                 System.out.println("[AntiSpam] Error, MCbans not found. Option 4 cannot be used, defaulting to Bukkit bans");
                 player.setBanned(true);
@@ -200,9 +199,8 @@ implements Listener {
             }
             break;
         case 5:
-            if(mcb!=null){
-                Ban ban = new Ban(mcb, "tempBan", player.getName(), player.getAddress().getAddress().getHostAddress(), "[antiSpam]", pluginMain.settings.getString("tempBanMessage"), Duration, Measure);
-                (new Thread(ban)).start();
+            if(mcbApi!=null){
+                mcbApi.tempBan(player.getName(), "[antiSpam]", pluginMain.settings.getString("tempBanMessage"),  Duration, Measure);
             }else{
                 System.out.println("[AntiSpam] Error, MCbans not found. Option 5 cannot be used, defaulting to Bukkit bans");
                 player.setBanned(true);
