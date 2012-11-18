@@ -1,0 +1,15 @@
+# Eclipse stuff
+.classpath
+.project
+.settings
+.settings/
+
+# Mac filesystem dust
+.DS_Store
+
+# others
+desktop.ini
+bin
+bin/**
+build.xml
+/target
