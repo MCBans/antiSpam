@@ -3,6 +3,7 @@ main: com.firestar.antiSpam.main
 version: 1.5
 description: Stops spam in chat and command spam.
 author: Firestar,Syamn
+softdepend: [MCBans]
 permissions:
   antispam.ignore:
     description: Ignore chat from this player
