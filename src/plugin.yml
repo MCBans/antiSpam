@@ -1,10 +1,13 @@
 name: antispam
 main: com.firestar.antiSpam.main
-version: 1.5
+version: 1.6-SNAPSHOT
 description: Stops spam in chat and command spam.
-author: Firestar,Syamn
+author: Firestar, Syamn
 softdepend: [MCBans]
 permissions:
-  antispam.ignore:
-    description: Ignore chat from this player
+  antispam.ignore.chat:
+    description: Ignore chat spam from this player
+    default: op
+  antispam.ignore.command
+    description: Ignore command spam from this player
     default: op
