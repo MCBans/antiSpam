@@ -8,6 +8,6 @@ permissions:
   antispam.ignore.chat:
     description: Ignore chat spam from this player
     default: op
-  antispam.ignore.command
+  antispam.ignore.command:
     description: Ignore command spam from this player
     default: op

@@ -63,7 +63,7 @@ implements Listener {
         Plugin test = this.plugin.getServer().getPluginManager().getPlugin("MCBans");
         if ((this.mcbApi == null) && (test != null)) {
             if(test.isEnabled()){
-                this.mcbApi = ((MCBans) test).getAPI(plugin);;
+                this.mcbApi = ((MCBans) test).getAPI(plugin);
                 this.plugin.message("Found MCBans 4.0+, enabling this!");
             }
         }
