@@ -1,6 +1,6 @@
 name: antispam
 main: com.firestar.antiSpam.main
-version: 1.6-SNAPSHOT
+version: 1.6
 description: Stops spam in chat and command spam.
 author: Firestar, Syamn
 softdepend: [MCBans]
